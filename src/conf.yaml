@@ -12,3 +12,17 @@
 
           Any lines that are 'more-indented' keep the rest of their indentation -
           these lines will indented by 4 spaces.
+- run:
+    key: '2help'
+    description: "2beautiful help script"
+    path: "2path to file"
+    literal_block_bash_file: |
+      2echo hello chewbacca
+      2This entire block of text will be the value of the 'literal_block' key,
+      2with line breaks being preserved.
+
+      2The literal continues until de-dented, and the leading indentation is
+      2stripped.
+
+          2Any lines that are 'more-indented' keep the rest of their indentation -
+          2these lines will indented by 4 spaces.
