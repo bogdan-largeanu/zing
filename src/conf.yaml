@@ -1,0 +1,13 @@
+- run:
+    key: 'help'
+    description: "beautiful help script"
+    path: "path to file"
+    literal_block_bash_file: |
+      This entire block of text will be the value of the 'literal_block' key,
+      with line breaks being preserved.
+
+      The literal continues until de-dented, and the leading indentation is
+      stripped.
+
+          Any lines that are 'more-indented' keep the rest of their indentation -
+          these lines will indented by 4 spaces.
