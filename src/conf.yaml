@@ -3,6 +3,7 @@
     description: "beautiful help script"
     path: "path to file"
     literal_block_bash_file: |
+      echo hello chewbacca
       This entire block of text will be the value of the 'literal_block' key,
       with line breaks being preserved.
 
