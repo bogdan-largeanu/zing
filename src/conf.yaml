@@ -13,7 +13,7 @@
           Any lines that are 'more-indented' keep the rest of their indentation -
           these lines will indented by 4 spaces.
 - run:
-    key: '2help'
+    key: 'magic'
     description: "2beautiful help script"
     path: "2path to file"
     literal_block_bash_file: |
