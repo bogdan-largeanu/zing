@@ -1,23 +1,16 @@
 - run:
-    key: 'help'
-    description: "beautiful help script"
+    key: 'demo'
+    description: "I am all about that bash that bash: "
     path: "path to file"
     literal_block_bash_file: |
       echo hello chewbacca
-      This entire block of text will be the value of the 'literal_block' key,
-      with line breaks being preserved.
-
-      The literal continues until de-dented, and the leading indentation is
-      stripped.
-
-          Any lines that are 'more-indented' keep the rest of their indentation -
-          these lines will indented by 4 spaces.
+      ls
 - run:
-    key: 'magic'
-    description: "2beautiful help script"
-    path: "2path to file"
+    key: 'teleport'
+    description: "You can use this to levitate, just set a high refresh rate"
+    path: "path to god"
     literal_block_bash_file: |
-      2echo hello chewbacca
+      hello chewbacca
       2This entire block of text will be the value of the 'literal_block' key,
       2with line breaks being preserved.
 
