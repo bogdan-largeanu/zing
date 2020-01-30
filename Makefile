@@ -4,7 +4,7 @@ default: test
 
 test:
 	cd src && \
-	go run main.go add test
+	go run main.go
 
 #type arguments after profile
 run:
