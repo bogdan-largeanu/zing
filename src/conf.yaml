@@ -19,3 +19,9 @@
 
           2Any lines that are 'more-indented' keep the rest of their indentation -
           2these lines will indented by 4 spaces.
+- run:
+    key:
+    description: "test lack of key"
+    path: "yes path is good"
+    literal_block_bash_file: |
+      bash...text...
