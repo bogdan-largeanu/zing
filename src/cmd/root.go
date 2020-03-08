@@ -10,29 +10,6 @@ import (
 	"strings"
 )
 
-//type yamlStructure []struct {
-//	Run struct {
-//		Key                  string `yaml:"key"`
-//		Description          string `yaml:"description"`
-//		Path                 string `yaml:"path"`
-//		LiteralBlockBashFile string `yaml:"literal_block_bash_file"`
-//	} `yaml:"run"`
-//}
-//
-//func (c *yamlStructure) ReadYml() *yamlStructure {
-//
-//	yamlFile, err := ioutil.ReadFile("conf.yaml")
-//	if err != nil {
-//		log.Printf("yamlFile.Get err   #%v ", err)
-//	}
-//	err = yaml.Unmarshal(yamlFile, &c)
-//	if err != nil {
-//		log.Fatalf("Unmarshal: %v", err)
-//	}
-//
-//	return c
-//}
-
 func runBash(command string) {
 	//app := "echo hello dork"
 	shell := "bash"
@@ -104,14 +81,19 @@ func buildCommands(key string, description string, bashBlock string) *cobra.Comm
 func Execute() {
 	var rootCmd = &cobra.Command{Use: "default"}
 
-	c, _, err := modules.ReadYml()
+	c, err := modules.ReadYml()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	rootCmd.AddCommand(buildCommands(c[0].Run.Key, c[0].Run.Description, c[0].Run.LiteralBlockBashFile))
-	rootCmd.AddCommand(buildCommands(c[1].Run.Key, c[1].Run.Description, c[1].Run.LiteralBlockBashFile))
+	for comandIndex := range c {
+		rootCmd.AddCommand(
+			buildCommands(
+				c[comandIndex].Run.Key,
+				c[comandIndex].Run.Description,
+				c[comandIndex].Run.LiteralBlockBashFile))
+	}
 
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)

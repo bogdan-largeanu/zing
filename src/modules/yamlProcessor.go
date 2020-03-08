@@ -17,7 +17,7 @@ type YamlStructure []struct {
 	} `yaml:"run"`
 }
 
-func ReadYml() (YamlStructure, int, error) {
+func ReadYml() (YamlStructure, error) {
 	var yamlStruc YamlStructure
 
 	yamlFile, err := ioutil.ReadFile("conf.yaml")
@@ -32,13 +32,13 @@ func ReadYml() (YamlStructure, int, error) {
 	return checkYamlFormat(yamlStruc)
 }
 
-func checkYamlFormat(structure YamlStructure) (YamlStructure, int, error) {
+func checkYamlFormat(structure YamlStructure) (YamlStructure, error) {
 	for i := range structure {
 		if structure[i].Run.Key == "" {
 			description := fmt.Sprintf("\n Description: %#v", structure[i].Run.Description)
 			bashScript := fmt.Sprintf("\n literal_block_bash_file: %#v", structure[i].Run.LiteralBlockBashFile)
 			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
-			return structure, i, errors.New(description + bashScript + path +
+			return structure, errors.New(description + bashScript + path +
 				"\n ERROR -> Missing field \"run\" ")
 		}
 
@@ -46,10 +46,10 @@ func checkYamlFormat(structure YamlStructure) (YamlStructure, int, error) {
 			description := fmt.Sprintf("\n Description: %#v", structure[i].Run.Description)
 			run := fmt.Sprintf("\n run: %#v", structure[i].Run.Key)
 			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
-			return structure, i, errors.New(description + run + path +
+			return structure, errors.New(description + run + path +
 				"\n ERROR -> Missing field \"literal_block_bash_file\" ")
 		}
 
 	}
-	return structure, 0, nil
+	return structure, nil
 }
