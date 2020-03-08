@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"github.com/bogdan-largeanu/zing/src/modules"
 	"github.com/spf13/cobra"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
 )
 
-//type YamlStructure []struct {
+//type yamlStructure []struct {
 //	Run struct {
 //		Key                  string `yaml:"key"`
 //		Description          string `yaml:"description"`
@@ -18,7 +19,7 @@ import (
 //	} `yaml:"run"`
 //}
 //
-//func (c *YamlStructure) ReadYml() *YamlStructure {
+//func (c *yamlStructure) ReadYml() *yamlStructure {
 //
 //	yamlFile, err := ioutil.ReadFile("conf.yaml")
 //	if err != nil {
@@ -103,8 +104,11 @@ func buildCommands(key string, description string, bashBlock string) *cobra.Comm
 func Execute() {
 	var rootCmd = &cobra.Command{Use: "default"}
 
-	var c modules.YamlStructure
-	c.ReadYml()
+	c, _, err := modules.ReadYml()
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	rootCmd.AddCommand(buildCommands(c[0].Run.Key, c[0].Run.Description, c[0].Run.LiteralBlockBashFile))
 	rootCmd.AddCommand(buildCommands(c[1].Run.Key, c[1].Run.Description, c[1].Run.LiteralBlockBashFile))

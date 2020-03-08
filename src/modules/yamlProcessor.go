@@ -1,6 +1,8 @@
 package modules
 
 import (
+	"errors"
+	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -15,27 +17,39 @@ type YamlStructure []struct {
 	} `yaml:"run"`
 }
 
-func (yamlStruc *YamlStructure) ReadYml() *YamlStructure {
+func ReadYml() (YamlStructure, int, error) {
+	var yamlStruc YamlStructure
 
 	yamlFile, err := ioutil.ReadFile("conf.yaml")
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}
-	err = yaml.Unmarshal(yamlFile, yamlStruc)
+	err = yaml.Unmarshal(yamlFile, &yamlStruc)
 	if err != nil {
 		log.Fatalf("Unmarshal: %v", err)
 	}
 
-	checkYamlFormat(yamlStruc)
-
-	return yamlStruc
+	return checkYamlFormat(yamlStruc)
 }
 
-func checkYamlFormat(yamlStruct *YamlStructure) bool {
-	//todo find why this is read twice
-	//todo check key and bash file are valid throw stout error otherwise to use
-	for i := range *yamlStruct {
-		println("DEBUG", yamlStruct[i])
+func checkYamlFormat(structure YamlStructure) (YamlStructure, int, error) {
+	for i := range structure {
+		if structure[i].Run.Key == "" {
+			description := fmt.Sprintf("\n Description: %#v", structure[i].Run.Description)
+			bashScript := fmt.Sprintf("\n literal_block_bash_file: %#v", structure[i].Run.LiteralBlockBashFile)
+			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
+			return structure, i, errors.New(description + bashScript + path +
+				"\n ERROR -> Missing field \"run\" ")
+		}
+
+		if structure[i].Run.LiteralBlockBashFile == "" {
+			description := fmt.Sprintf("\n Description: %#v", structure[i].Run.Description)
+			run := fmt.Sprintf("\n run: %#v", structure[i].Run.Key)
+			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
+			return structure, i, errors.New(description + run + path +
+				"\n ERROR -> Missing field \"literal_block_bash_file\" ")
+		}
+
 	}
-	return false
+	return structure, 0, nil
 }
