@@ -27,7 +27,7 @@ Example `./zing demo`
 
 ## How to Run
 
-App requires a conf.yaml to run against. Take a look at folder `Build` to see the format of the app.
+App requires a conf.yaml to run against. Take a look at folder `Build-Demo` to see the format of the app.
 Zing can be passed arguments to run the scripts you defined in conf.yaml
 
 To see all available command simply run after build `./zing`
@@ -61,4 +61,4 @@ The zing app expected to be next to a conf.yaml file.
 ## Next Steps
 
 At the moment path is still in progress. 
-The project is very early stages so the code is probably buggy. Please raise a github issue if you noticed bugs.
+The project is very early stages, so the code is def buggy. Please raise a github issue if you noticed bugs.
