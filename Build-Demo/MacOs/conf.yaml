@@ -1,0 +1,16 @@
+- run:
+    key: 'demo'
+    description: "I am all about that bash that bash: "
+    path: "~/Documents/go/src/github.com/bogdan-largeanu/src/src"
+    literal_block_bash_file: |
+      echo hello chewbacca
+      ls
+      pwd
+- run:
+    key: 'teleport'
+    description: "You can also use this to levitate, just set a high refresh rate"
+    path: "path to god"
+    literal_block_bash_file: |
+      echo :)
+      echo
+      echo                          :)
