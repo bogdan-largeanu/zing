@@ -3,11 +3,11 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 default: demo
 
 demo:
-	go run main.go demo
+	go run zing.go demo
 
 #type arguments after profile
 run:
-	go run main.go $(call args, ;)
+	go run zing.go $(call args, ;)
 
 test:
 	go test -v

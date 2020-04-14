@@ -58,7 +58,7 @@ func buildCommands(key string, path string, bashBlock string, description string
 
 			for k, bashLine := range bashCommands {
 				if k == 0 {
-					fmt.Println("zing$ " + bashLine)
+					fmt.Println("src$ " + bashLine)
 					runBash(bashLine, path)
 				}
 				//if k == 1 {

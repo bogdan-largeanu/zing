@@ -1,8 +1,8 @@
 - run:
     key: 'demo'
     description: "I am all about that bash that bash: "
-    path: "~/Documents/go/src/github.com/bogdan-largeanu/zing/src"
-    bash_scripts: |
+    path: "~/Documents/go/src/github.com/bogdan-largeanu/src/src"
+    literal_block_bash_file: |
       echo hello chewbacca
       ls
       pwd
@@ -10,7 +10,7 @@
     key: 'teleport'
     description: "You can use this to levitate, just set a high refresh rate"
     path: "path to god"
-    bash_scripts: |
+    literal_block_bash_file: |
       echo :)
       echo
       echo                          :)
