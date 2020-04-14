@@ -1,27 +1,22 @@
 - run:
     key: 'demo'
     description: "I am all about that bash that bash: "
-    path: "path to file"
-    literal_block_bash_file: |
+    path: "~/Documents/go/src/github.com/bogdan-largeanu/zing/src"
+    bash_scripts: |
       echo hello chewbacca
       ls
+      pwd
 - run:
     key: 'teleport'
     description: "You can use this to levitate, just set a high refresh rate"
     path: "path to god"
-    literal_block_bash_file: |
-      hello chewbacca
-      2This entire block of text will be the value of the 'literal_block' key,
-      2with line breaks being preserved.
-
-      2The literal continues until de-dented, and the leading indentation is
-      2stripped.
-
-          2Any lines that are 'more-indented' keep the rest of their indentation -
-          2these lines will indented by 4 spaces.
+    bash_scripts: |
+      echo :)
+      echo
+      echo                          :)
 #- run:
 #    key:
 #    description: "test lack of key"
 #    path: "yes path is good"
-#    literal_block_bash_file: |
+#    bash_scripts: |
 #      bash...text...

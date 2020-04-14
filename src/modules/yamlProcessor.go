@@ -13,7 +13,7 @@ type YamlStructure []struct {
 		Key                  string `yaml:"key"`
 		Description          string `yaml:"description"`
 		Path                 string `yaml:"path"`
-		LiteralBlockBashFile string `yaml:"literal_block_bash_file"`
+		LiteralBlockBashFile string `yaml:"bash_scripts"`
 	} `yaml:"run"`
 }
 
@@ -36,7 +36,7 @@ func checkYamlFormat(structure YamlStructure) (YamlStructure, error) {
 	for i := range structure {
 		if structure[i].Run.Key == "" {
 			description := fmt.Sprintf("\n Description: %#v", structure[i].Run.Description)
-			bashScript := fmt.Sprintf("\n literal_block_bash_file: %#v", structure[i].Run.LiteralBlockBashFile)
+			bashScript := fmt.Sprintf("\n bash_scripts: %#v", structure[i].Run.LiteralBlockBashFile)
 			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
 			return structure, errors.New(description + bashScript + path +
 				"\n ERROR -> Missing field \"run\" ")
@@ -47,7 +47,7 @@ func checkYamlFormat(structure YamlStructure) (YamlStructure, error) {
 			run := fmt.Sprintf("\n run: %#v", structure[i].Run.Key)
 			path := fmt.Sprintf("\n path: %#v", structure[i].Run.Path)
 			return structure, errors.New(description + run + path +
-				"\n ERROR -> Missing field \"literal_block_bash_file\" ")
+				"\n ERROR -> Missing field \"bash_scripts\" ")
 		}
 
 	}

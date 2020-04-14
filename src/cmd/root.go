@@ -10,21 +10,29 @@ import (
 	"strings"
 )
 
-func runBash(command string) {
-	//app := "echo hello dork"
+func runBash(command string, path string) {
 	shell := "bash"
+	var shCommand *exec.Cmd
 
-	shCommand := exec.Command(shell, "-c", command)
+	if path == "" {
+		shCommand = exec.Command(shell, "-ci", command)
+
+	} else {
+		shCommand = exec.Command(shell, "-ci", command)
+		//TODO add the path from yaml to run all the lines of code from block
+		//shCommand.Path = "~/Documents"
+	}
+
 	stdout, err := shCommand.Output()
 
 	if err != nil {
-		fmt.Println(err.Error())
-		return
+		fmt.Println("ERR: " + err.Error())
 	}
 
 	fmt.Print(string(stdout))
 }
-func buildCommands(key string, description string, bashBlock string) *cobra.Command {
+
+func buildCommands(key string, path string, bashBlock string, description string) *cobra.Command {
 
 	bashCommands := strings.Split(bashBlock, "\n")
 	return &cobra.Command{
@@ -48,15 +56,15 @@ func buildCommands(key string, description string, bashBlock string) *cobra.Comm
 		PreRunE:                nil,
 		Run: func(cmd *cobra.Command, args []string) {
 
-			for k, v := range bashCommands {
+			for k, bashLine := range bashCommands {
 				if k == 0 {
-					fmt.Println("$" + v)
-					runBash(v)
+					fmt.Println("zing$ " + bashLine)
+					runBash(bashLine, path)
 				}
-				if k == 1 {
-					fmt.Println("$" + v)
-					runBash(v)
-				}
+				//if k == 1 {
+				//	fmt.Println("zing$ " + bashLine)
+				//	runBash(bashLine, "")
+				//}
 
 			}
 		},
@@ -79,20 +87,19 @@ func buildCommands(key string, description string, bashBlock string) *cobra.Comm
 }
 
 func Execute() {
-	var rootCmd = &cobra.Command{Use: "default"}
+	var rootCmd = &cobra.Command{}
 
-	c, err := modules.ReadYml()
-
+	userCommands, err := modules.ReadYml()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for comandIndex := range c {
+	for commandIndex := range userCommands {
 		rootCmd.AddCommand(
-			buildCommands(
-				c[comandIndex].Run.Key,
-				c[comandIndex].Run.Description,
-				c[comandIndex].Run.LiteralBlockBashFile))
+			buildCommands(userCommands[commandIndex].Run.Key,
+				userCommands[commandIndex].Run.Path,
+				userCommands[commandIndex].Run.LiteralBlockBashFile,
+				userCommands[commandIndex].Run.Description))
 	}
 
 	if err := rootCmd.Execute(); err != nil {
