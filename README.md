@@ -54,7 +54,7 @@ Alternative method if the app is not build is to run `$ go run zing.go demo` in 
 
 ## Folder Structure
 
-!! Warning Windows and linux build not tested. I recommend you Build from scratch.
+!! Warning linux build not tested. I recommend you Build from scratch.
 
 The zing app expected to be next to a conf.yaml file.
 
