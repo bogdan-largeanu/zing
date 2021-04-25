@@ -1,4 +1,4 @@
-module src
+module zing
 
 go 1.13
 

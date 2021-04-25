@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/bogdan-largeanu/zing/src/cmd"
+	"zing/src/cmd"
 )
 
 func main() {

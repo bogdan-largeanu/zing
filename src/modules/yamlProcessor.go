@@ -6,6 +6,7 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 type YamlStructure []struct {
@@ -19,10 +20,11 @@ type YamlStructure []struct {
 
 func ReadYml() (YamlStructure, error) {
 	var yamlStruc YamlStructure
-
-	yamlFile, err := ioutil.ReadFile("conf.yaml")
+	fileUrl := os.Getenv("HOME") + "/.zingrc.yaml"
+	yamlFile, err := ioutil.ReadFile(fileUrl)
 	if err != nil {
-		log.Printf("yamlFile.Get err   #%v ", err)
+		println(os.Getenv("HOME"))
+		log.Fatalf("Try to Read zingrc.yaml: Got err #%v ", err)
 	}
 	err = yaml.Unmarshal(yamlFile, &yamlStruc)
 	if err != nil {

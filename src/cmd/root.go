@@ -2,15 +2,14 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/bogdan-largeanu/zing/src/modules"
 	"github.com/spf13/cobra"
 	"log"
-	"os"
 	"os/exec"
 	"strings"
+	"zing/src/modules"
 )
 
-func runBash(command string, path string) {
+func executeShellCommand(command string, path string, extraArgs []string) {
 	shell := "bash"
 	var shCommand *exec.Cmd
 
@@ -35,6 +34,7 @@ func runBash(command string, path string) {
 func buildCommands(key string, path string, bashBlock string, description string) *cobra.Command {
 
 	bashCommands := strings.Split(bashBlock, "\n")
+
 	return &cobra.Command{
 		Use:                    key,
 		Aliases:                nil,
@@ -54,19 +54,8 @@ func buildCommands(key string, path string, bashBlock string, description string
 		PersistentPreRunE:      nil,
 		PreRun:                 nil,
 		PreRunE:                nil,
-		Run: func(cmd *cobra.Command, args []string) {
-
-			for k, bashLine := range bashCommands {
-				if k == 0 {
-					fmt.Println("src$ " + bashLine)
-					runBash(bashLine, path)
-				}
-				//if k == 1 {
-				//	fmt.Println("zing$ " + bashLine)
-				//	runBash(bashLine, "")
-				//}
-
-			}
+		Run: func(cmd *cobra.Command, extraArguments []string) {
+			runShellCommands(bashCommands, path, extraArguments)
 		},
 		RunE:                       nil,
 		PostRun:                    nil,
@@ -86,6 +75,20 @@ func buildCommands(key string, path string, bashBlock string, description string
 
 }
 
+func runShellCommands(bashCommands []string, path string, extraArguments []string) {
+	for k, bashLine := range bashCommands {
+		//first shell line accepts extra arguments , otherwise will execute only the code described
+		if k == 0 {
+			bashLine = bashLine + " " + strings.Join(extraArguments, " ")
+			println("DEBUG: src$ " + bashLine)
+			executeShellCommand(bashLine, path, extraArguments)
+		} else {
+			println("DEBUG: src$ " + bashLine)
+			executeShellCommand(bashLine, path, extraArguments)
+		}
+	}
+}
+
 func Execute() {
 	var rootCmd = &cobra.Command{}
 
@@ -103,7 +106,6 @@ func Execute() {
 	}
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }
